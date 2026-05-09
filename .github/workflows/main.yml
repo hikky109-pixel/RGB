@@ -2,12 +2,14 @@ name: RGB Cycle Daily
 
 on:
   schedule:
-    - cron: '0 21 * * *'   # 日本時間 朝6時
+    - cron: '0 19 * * *'   # 日本時間 朝4時（UTC19時）
   workflow_dispatch:
 
 jobs:
   post-rgb:
     runs-on: ubuntu-latest
+    env:
+      TZ: 'Asia/Tokyo'        # 日本時間に指定
     
     steps:
       - name: Checkout code
