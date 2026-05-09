@@ -1,0 +1,22 @@
+name: RGB Cycle Daily
+
+on:
+  schedule:
+    - cron: '0 21 * * *'  # 日本時間 朝6時（UTC 21時）
+  workflow_dispatch:  # 手動でも実行できるように
+
+jobs:
+  post-rgb:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      
+      - name: Run RGB cycle script
+        run: python rgb_cycle.py
