@@ -2,7 +2,7 @@ from datetime import datetime
 import requests
 
 # ================== 設定 ==================
-WEBHOOK_URL = "https://discord.com/api/webhooks/1502187450037047306/cy-lwGP_5eisPhCj9zpSR3XAKvsOcHRdF9eS5YXPatjpys8b04jVN6J60eA-keVGNqh1"
+WEBHOOK_URL = "https://discord.com/api/webhooks/1502792629354500326/x26-wV3DGyyeZoQld_6HOP-GMQ6dycXCUkeUkpjeUNozsoFzvmxp143hS7so3zZFnakg"
 # =========================================
 
 base_date = datetime(2026, 5, 10)
