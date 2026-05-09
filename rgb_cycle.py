@@ -1,28 +1,38 @@
 from datetime import datetime
-import sys
+import requests
 
-# 基準日（2026年5月10日が赤）
+# ================== 設定 ==================
+WEBHOOK_URL = "https://discord.com/api/webhooks/1502187450037047306/cy-lwGP_5eisPhCj9zpSR3XAKvsOcHRdF9eS5YXPatjpys8b04jVN6J60eA-keVGNqh1"
+# =========================================
+
 base_date = datetime(2026, 5, 10)
-today = datetime.now()
+today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
-# 日数の差を計算
 days_diff = (today - base_date).days
-
-# 3で割った余りで色を判定
 cycle = days_diff % 3
 
 if cycle == 0:
-    color = "🔴 赤"
+    color_emoji = "🔴"
     color_name = "赤"
 elif cycle == 1:
-    color = "🟢 緑"
+    color_emoji = "🟢"
     color_name = "緑"
 else:
-    color = "🔵 青"
+    color_emoji = "🔵"
     color_name = "青"
 
-print(f"今日は {color} です")
-print(f"名古屋駅入構標の色: {color_name}")
+message = f"{color_emoji} **本日の名古屋駅入構標の色は「{color_name}」です** {color_emoji}"
 
-# Discord投稿用（後で使う）
-print(f"DISCORD_COLOR:{color_name}")
+payload = {
+    "content": message,
+    "username": "名古屋駅RGB"
+}
+
+response = requests.post(WEBHOOK_URL, json=payload)
+
+if response.status_code == 204:
+    print("Discordに投稿しました")
+    print(f"色: {color_name}")
+else:
+    print(f"エラー: {response.status_code}")
+    print(response.text)
