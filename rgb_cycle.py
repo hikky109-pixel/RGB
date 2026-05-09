@@ -5,6 +5,7 @@ import requests
 WEBHOOK_URL = "https://discord.com/api/webhooks/1502792629354500326/x26-wV3DGyyeZoQld_6HOP-GMQ6dycXCUkeUkpjeUNozsoFzvmxp143hS7so3zZFnakg"
 # =========================================
 
+# 今日（2026年5月10日）が青なので、それを基準にする
 base_date = datetime(2026, 5, 10)
 today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
@@ -12,14 +13,14 @@ days_diff = (today - base_date).days
 cycle = days_diff % 3
 
 if cycle == 0:
-    color_emoji = "🔴"
-    color_name = "赤"
-elif cycle == 1:
-    color_emoji = "🟢"
-    color_name = "緑"
-else:
     color_emoji = "🔵"
     color_name = "青"
+elif cycle == 1:
+    color_emoji = "🔴"
+    color_name = "赤"
+else:
+    color_emoji = "🟢"
+    color_name = "緑"
 
 message = f"{color_emoji} **本日の名古屋駅入構標の色は「{color_name}」です** {color_emoji}"
 
