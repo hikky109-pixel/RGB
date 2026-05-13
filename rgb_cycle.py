@@ -21,7 +21,7 @@ else:
     color_emoji = "🔵"
     color_name = "青"
 
-message = f"{color_emoji} **本日の名古屋駅入構標の色は「{color_name}」です** {color_emoji}"
+message = f"{color_emoji} **本日の名古屋駅専色は「{color_name}」です** {color_emoji}"
 
 payload = {
     "content": message,
