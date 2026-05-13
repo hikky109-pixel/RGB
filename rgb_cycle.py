@@ -25,7 +25,7 @@ message = f"{color_emoji} **本日の名古屋駅入構標の色は「{color_nam
 
 payload = {
     "content": message,
-    "username": "名古屋駅駅色BOT"
+    "username": "JR名古屋駅駅色BOT"
 }
 
 response = requests.post(WEBHOOK_URL, json=payload)
