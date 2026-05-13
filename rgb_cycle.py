@@ -1,37 +1,50 @@
 from datetime import datetime
 import requests
+import os
 
 # ================== 設定 ==================
-WEBHOOK_URL = "https://discord.com/api/webhooks/1502792629354500326/x26-wV3DGyyeZoQld_6HOP-GMQ6dycXCUkeUkpjeUNozsoFzvmxp143hS7so3zZFnakg"
-# =========================================
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
-today = datetime.now().day  # 今日の日付（10日なら10）
+# X API情報（GitHub Secretsから取得）
+X_CONSUMER_KEY = os.getenv("X_CONSUMER_KEY")
+X_CONSUMER_SECRET = os.getenv("X_CONSUMER_SECRET")
+X_ACCESS_TOKEN = os.getenv("X_ACCESS_TOKEN")
+X_ACCESS_TOKEN_SECRET = os.getenv("X_ACCESS_TOKEN_SECRET")
+# ============================================
 
-# 5月10日が赤なので、そこから計算
-base = 10
-diff = (today - base) % 3
+def get_today_color():
+    today = datetime.now().day
+    base = 10
+    diff = (today - base) % 3
 
-if diff == 0:
-    color_emoji = "🔴"
-    color_name = "赤"
-elif diff == 1:
-    color_emoji = "🟢"
-    color_name = "緑"
-else:
-    color_emoji = "🔵"
-    color_name = "青"
+    if diff == 0:
+        return "🔴", "赤"
+    elif diff == 1:
+        return "🟢", "緑"
+    else:
+        return "🔵", "青"
 
-message = f"{color_emoji} **本日の名古屋駅専色は「{color_name}」です** {color_emoji}"
+def main():
+    emoji, color_name = get_today_color()
+    message = f"{emoji} 本日の名古屋駅入構標の色は「{color_name}」です {emoji}"
 
-payload = {
-    "content": message,
-    "username": "JR名古屋駅駅色BOT"
-}
+    print(f"投稿内容: {message}")
 
-response = requests.post(WEBHOOK_URL, json=payload)
+    # Discord投稿
+    if DISCORD_WEBHOOK:
+        try:
+            payload = {"content": message, "username": "名古屋駅RGB"}
+            response = requests.post(DISCORD_WEBHOOK, json=payload)
+            if response.status_code == 204:
+                print("✅ Discordに投稿しました")
+            else:
+                print(f"❌ Discord投稿エラー: {response.status_code}")
+        except Exception as e:
+            print(f"❌ Discord投稿例外: {e}")
+    else:
+        print("⚠️ DISCORD_WEBHOOK が設定されていません")
 
-if response.status_code == 204:
-    print(f"✅ Discordに投稿しました: {color_name}")
-else:
-    print(f"❌ エラー: {response.status_code}")
-    print(response.text)
+    print("X投稿は後で実装します")
+
+if __name__ == "__main__":
+    main()
