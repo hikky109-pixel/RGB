@@ -27,7 +27,7 @@ def get_today_color():
 def post_to_discord(message):
     if DISCORD_WEBHOOK:
         try:
-            payload = {"content": message, "username": "名古屋駅駅色bot"}
+            payload = {"content": message, "username": "名古屋駅RGB"}
             response = requests.post(DISCORD_WEBHOOK, json=payload)
             if response.status_code == 204:
                 print("✅ Discordに投稿しました")
@@ -57,7 +57,7 @@ def post_to_x(message):
 
 def main():
     emoji, color_name = get_today_color()
-    message = f"{emoji} 本日の名古屋駅色は「{color_name}」です {emoji}"
+    message = f"{emoji} 本日の名古屋駅入構標の色は「{color_name}」です {emoji}"
 
     print(f"投稿内容: {message}")
 
