@@ -2,7 +2,7 @@ name: RGB Cycle Daily
 
 on:
   schedule:
-    - cron: '0 17 * * *'     # 日本時間 朝2:00（UTC17時）
+    - cron: '30 16 * * *'     # 日本時間 午前1:30
   workflow_dispatch:
 
 jobs:
@@ -21,14 +21,9 @@ jobs:
           python-version: '3.x'
       
       - name: Install dependencies
-        run: |
-          pip install requests tweepy
+        run: pip install requests
       
       - name: Run RGB cycle script
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          X_CONSUMER_KEY: ${{ secrets.X_CONSUMER_KEY }}
-          X_CONSUMER_SECRET: ${{ secrets.X_CONSUMER_SECRET }}
-          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
-          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: python rgb_cycle.py
