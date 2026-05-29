@@ -1,6 +1,6 @@
 name: RGB Cycle Daily
 
-on:
+'on':
   schedule:
     - cron: '30 16 * * *'   # 日本時間 1:30
   workflow_dispatch:
